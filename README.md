@@ -1,0 +1,1 @@
+# shopping-users-service
