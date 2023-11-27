@@ -27,7 +27,7 @@ class TestUserAPI(unittest.TestCase):
         self.assertEqual(json.loads(response.data.decode('utf-8')), {'message': 'User created successfully'})
 
     def test_user_login(self):
-        data = {'username': 'testuser', 'password': 'testpassword'}
+        data = {'username': 'new1', 'password': 'new2'}
         response = self.app.post('/api/user/login/', data=json.dumps(data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.data.decode('utf-8')), {'message': 'Login failed'})
