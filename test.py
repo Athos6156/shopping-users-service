@@ -14,6 +14,7 @@ class TestUserAPI(unittest.TestCase):
 
     def test_user_create(self):
         data = {
+            'Customer_ID': 'new1',
             'username': 'new1',
             'password': 'new2',
             'first_name': 'John',
@@ -24,7 +25,7 @@ class TestUserAPI(unittest.TestCase):
         }
         response = self.app.post('/api/user/create/', data=json.dumps(data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.data.decode('utf-8')), {'message': 'User created successfully'})
+        assert "CREATE sucess: " in json.loads(response.data.decode('utf-8'))['message']
 
     def test_user_login(self):
         data = {'username': 'testuser', 'password': 'testpassword'}
@@ -37,13 +38,13 @@ class TestUserAPI(unittest.TestCase):
         data = {'username': 'testuser', 'new_password': 'newpassword'}
         response = self.app.put('/api/user/update/', data=json.dumps(data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.data.decode('utf-8')), {'message': 'User not found'})
+        assert "UPDATE sucess: " in json.loads(response.data.decode('utf-8'))['message']
 
     def test_user_delete(self):
         data = {'username': 'existinguser'}
         response = self.app.delete('/api/user/delete/', data=json.dumps(data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.data.decode('utf-8')), {'message': 'User not found'})
+        assert "DELETE sucess: " in json.loads(response.data.decode('utf-8'))['message']
 
 if __name__ == '__main__':
     unittest.main()

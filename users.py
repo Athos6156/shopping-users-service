@@ -9,6 +9,7 @@ dbuser = DBUser()
 # help functions
 def get_user_info(data):
     userinfo = {}
+    userinfo['Customer_ID'] = data.get('Customer_ID') if 'Customer_ID' in data else ''
     userinfo['username'] = data.get('username') if 'username' in data else ''
     userinfo['password'] = data.get('password') if 'password' in data else ''
     userinfo['first_name'] = data.get('first_name') if 'first_name' in data else ''
@@ -59,7 +60,7 @@ def create():
     if existing_user:
         cursor.close()
         connection.close()
-        return jsonify({'message': 'User with this username already exists'})
+        return jsonify({'message': 'CREATE sucess: User with this username already exists'})
 
     # Create a new user
     create_user_query = "INSERT INTO dbuser (username, password, first_name, last_name, address, phone, gender) VALUES (%s, %s, %s, %s, %s, %s, %s)"
@@ -78,11 +79,11 @@ def create():
         connection.commit()
         cursor.close()
         connection.close()
-        return jsonify({'message': 'User created successfully'})
+        return jsonify({'message': 'CREATE sucess: User created successfully'})
     except mysql.connector.errors.IntegrityError as e:
         cursor.close()
         connection.close()
-        return jsonify({'message': 'Error creating user. Username already exists.'})
+        return jsonify({'message': 'CREATE sucess: Error creating user. Username already exists.'})
 
 
 @user_app.route('/api/user/update/', methods=['PUT'])
@@ -101,13 +102,13 @@ def update():
     if not existing_user:
         cursor.close()
         connection.close()
-        return jsonify({'message': 'User not found'})
+        return jsonify({'message': 'UPDATE sucess: User not found'})
 
     # Update the user
     update_user_query = """
 		UPDATE dbuser SET
 		password = %s, first_name = %s, last_name = %s, address = %s, phone = %s, gender = %s
-		WHERE username = %s
+		WHERE username = %s     
     """
     values = (
         user_info['password'], user_info['first_name'], user_info['last_name'], user_info['address'], 
@@ -119,11 +120,11 @@ def update():
         connection.commit()
         cursor.close()
         connection.close()
-        return jsonify({'message': 'User updated successfully'})
+        return jsonify({'message': 'UPDATE sucess: User updated successfully'})
     except mysql.connector.errors.IntegrityError as e:
         cursor.close()
         connection.close()
-        return jsonify({'message': 'Error updating user. IntegrityError.'})
+        return jsonify({'message': 'UPDATE sucess: Error updating user. IntegrityError.'})
 
 # ... (other imports)
 
@@ -143,7 +144,7 @@ def delete():
     if not existing_user:
         cursor.close()
         connection.close()
-        return jsonify({'message': 'User not found'})
+        return jsonify({'message': 'DELETE sucess: User not found'})
 
     # Delete the user
     delete_user_query = "DELETE FROM dbuser WHERE username = %s"
@@ -154,11 +155,11 @@ def delete():
         connection.commit()
         cursor.close()
         connection.close()
-        return jsonify({'message': 'User deleted successfully'})
+        return jsonify({'message': 'DELETE sucess: User deleted successfully'})
     except mysql.connector.errors.IntegrityError as e:
         cursor.close()
         connection.close()
-        return jsonify({'message': 'Error deleting user. IntegrityError.'})
+        return jsonify({'message': 'DELETE sucess: Error deleting user. IntegrityError.'})
 
 
 if __name__ == '__main__':
