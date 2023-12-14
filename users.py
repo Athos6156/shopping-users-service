@@ -35,13 +35,20 @@ def login():
     values = (user_info['username'], user_info['password'])
 
     cursor.execute(query, values)
+    print(cursor.statement)
     user = cursor.fetchone()
+    print(user)
 
     cursor.close()
+    print("close cursor")
     connection.close()
+    print("close connection")
 
     if user:
-        return jsonify({'message': 'Login successful'})
+        return jsonify({
+            'message': 'Login Success', 
+            'data': user}
+        )
     return jsonify({'message': 'Login failed'})
 
 @user_app.route('/api/user/create/', methods=['POST'])

@@ -7,7 +7,7 @@ class DBUser:
     def connect_to_db(self):
         try:
             connection = mysql.connector.connect(
-                host="database-1.ccpnj0h1rgzu.us-east-1.rds.amazonaws.com",  # Replace with your RDS endpoint
+                host="database-2.ccpnj0h1rgzu.us-east-1.rds.amazonaws.com",  # Replace with your RDS endpoint
                 user="admin",
                 password="dbuserdbuser",
                 database="dbuser",
