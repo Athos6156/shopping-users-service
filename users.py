@@ -12,6 +12,7 @@ dbuser = DBUser()
 # help functions
 def get_user_info(data):
 	userinfo = {}
+	userinfo['Customer_ID'] = data.get('Customer_ID') if 'Customer_ID' in data else ''
 	userinfo['username'] = data.get('username') if 'username' in data else ''
 	userinfo['password'] = data.get('password') if 'password' in data else ''
 	userinfo['first_name'] = data.get('first_name') if 'first_name' in data else ''
@@ -45,7 +46,10 @@ def login():
 	connection.close()
 
 	if user:
-		return jsonify({'message': 'Login successful'})
+		return jsonify({
+			'message': 'Login Success',
+			'data': user}
+		)
 	return jsonify({'message': 'Login failed'})
 
 
@@ -80,7 +84,7 @@ def create():
 	)
 
 	try:
-		url = f"https://us-street.api.smarty.com/street-address?street={user_info['address'].replace(' ', '+')}&auth-id=8d497be5-e211-4949-a18f-0bfd1d9970d3&auth-token=th4hargQiuyG7w7L7xfO"
+		url = f"https://us-street.api.smarty.com/street-address?street={user_info['address'].replace(' ', '+')}&auth-id=b2d175c0-b55e-f6de-ef6d-e9bb0ffdc8d0&auth-token=CSfcK5l5PSy7qww9b4cJ"
 		contents = urllib.request.urlopen(url).read()
 		contents_json = json.loads(contents)
 		if not contents_json:
@@ -96,7 +100,7 @@ def create():
 				user_info['phone'],
 				user_info['gender'],
 			)
-	except:
+	except Exception as ex:
 		return jsonify({'message': 'Unable to verify address.'})
 
 	try:

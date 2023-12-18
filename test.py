@@ -14,11 +14,12 @@ class TestUserAPI(unittest.TestCase):
 
     def test_user_create(self):
         data = {
-            'username': 'new1',
+			'Customer_ID': 'new1',
+			'username': 'new1',
             'password': 'new2',
             'first_name': 'John',
             'last_name': 'Doe',
-            'address': '123 Main St',
+            'address': '520 Madison Ave, NY, NY',
             'phone': '555-1234',
             'gender': 'male'
         }
@@ -34,7 +35,7 @@ class TestUserAPI(unittest.TestCase):
 
 
     def test_user_update(self):
-        data = {'username': 'testuser', 'new_password': 'newpassword'}
+        data = {'username': 'newuser', 'new_password': 'newpassword'}
         response = self.app.put('/api/user/update/', data=json.dumps(data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.data.decode('utf-8')), {'message': 'User not found'})
