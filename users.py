@@ -27,6 +27,22 @@ def get_user_info(data):
 def hello_world():
 	return 'Hello World, I am the Users Service, I will handle users info!'
 
+@user_app.route('/api/user/getdetails/', methods=['GET'])
+def getdetails():
+	data = request.get_json()
+
+	connection = dbuser.connect_to_db()
+	cursor = connection.cursor(dictionary=True)
+
+	query = f"SELECT * FROM dbuser WHERE username ='{data['username']}'"
+
+
+	cursor.execute(query)
+	user = cursor.fetchone()
+
+	cursor.close()
+	connection.close()
+	return user
 
 @user_app.route('/api/user/login/', methods=['POST'])
 def login():
