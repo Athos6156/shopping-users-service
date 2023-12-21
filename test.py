@@ -49,7 +49,7 @@ class TestUserAPI(unittest.TestCase):
 		self.assertEqual(json.loads(response.data.decode('utf-8')), {'message': 'User not found'})
 
 	def test_user_delete(self):
-		data = {'username': 'existinguser'}
+		data = {'username': 'new1'}
 		response = self.app.delete('/api/user/delete/', data=json.dumps(data), content_type='application/json')
 		self.assertEqual(response.status_code, 200)
 		self.assertEqual(json.loads(response.data.decode('utf-8')), {'message': 'User not found'})

@@ -88,8 +88,9 @@ def create():
 		return jsonify({'message': 'User with this username already exists'})
 
 	# Create a new user
-	create_user_query = "INSERT INTO dbuser (username, password, first_name, last_name, address, phone, gender) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+	create_user_query = "INSERT INTO dbuser (Customer_ID, username, password, first_name, last_name, address, phone, gender) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
 	values = (
+		user_info['Customer_ID'],
 		user_info['username'],
 		user_info['password'],
 		user_info['first_name'],
@@ -108,6 +109,7 @@ def create():
 		else:
 			address = contents_json[0]["delivery_line_1"] + ' ' + contents_json[0]["last_line"]
 			values = (
+				user_info['Customer_ID'],
 				user_info['username'],
 				user_info['password'],
 				user_info['first_name'],
