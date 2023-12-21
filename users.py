@@ -1,13 +1,16 @@
 import json
+import random
+from time import sleep
 
 from flask import Flask, request, jsonify
 from db import DBUser
 import mysql.connector
 import urllib.request
+from flask_cors import CORS
 
 user_app = Flask(__name__)
 dbuser = DBUser()
-
+cors = CORS(user_app, resources={r"/api/*": {"origins": "*"}})
 
 # help functions
 def get_user_info(data):
@@ -71,6 +74,7 @@ def login():
 
 @user_app.route('/api/user/create/', methods=['POST'])
 def create():
+	sleep(random.randint(0,5))
 	data = request.get_json()
 	user_info = get_user_info(data)
 
@@ -178,6 +182,7 @@ def update():
 
 @user_app.route('/api/user/delete/', methods=['DELETE'])
 def delete():
+	sleep(random.randint(0,5))
 	data = request.get_json()
 	username = data.get('username')
 
